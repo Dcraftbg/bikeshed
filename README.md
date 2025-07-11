@@ -1,4 +1,4 @@
-# The Bikeshed browser (temporary name)
+# The Bikeshed browser
 
 A simple and truly independent (*cough cough*) browser written in plain C code.
 
@@ -36,6 +36,9 @@ Bikeshed was somewhat the effect of our group's talks about the [Ladybird](https
 On top of that though, we also just wanna have a fun community project to work on! This is quite an interesting project, and having a good ol' read of the CSS+HTML5 specifications is always fun :)
 
 ## Contributing
+At this moment this fork is NOT accepting any contributions. Feel free to ask for any but as we've talked about
+the dependency on other people to do their job and not being able to progress because of it is causing a lot of issues.
+
 Checkout [CONTRIBUTE.md](CONTRIBUTE.md)
 
 ## Licensing
