@@ -44,6 +44,7 @@ void compute_box_html_tag(BSRenderer* renderer, HTMLTag* tag, BSFont* font, floa
                 y += textFontSize;
             }
             if(x + size.width > max_x) max_x = ceilf(x + size.width);
+            // FIXME: I don't know if this is correct if it already scrolled?
             if(y + size.height > max_y) max_y = ceilf(y + size.height);
             x += size.width;
         }
