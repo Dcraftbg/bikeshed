@@ -1,4 +1,10 @@
 #ifdef _WIN32
+# define EXE_SUFFIX ".exe"
+#else
+# define EXE_SUFFIX ""
+#endif
+
+#ifdef _WIN32
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
@@ -83,11 +89,7 @@ int main(int argc, char** argv) {
     
     // Building Raylib
     #define VENDOR_RAYLIB_NOB_FILEPATH "vendor/raylib-5.5/nob"
-    #ifdef _WIN32
-    #define VENDOR_RAYLIB_NOB_EXECUTABLE VENDOR_RAYLIB_NOB_FILEPATH".exe"
-    #else
-    #define VENDOR_RAYLIB_NOB_EXECUTABLE VENDOR_RAYLIB_NOB_FILEPATH
-    #endif
+    #define VENDOR_RAYLIB_NOB_EXECUTABLE VENDOR_RAYLIB_NOB_FILEPATH EXE_SUFFIX
     
     Cmd cmd = { 0 };
     if(nob_needs_rebuild1(VENDOR_RAYLIB_NOB_EXECUTABLE, VENDOR_RAYLIB_NOB_FILEPATH".c")) {
@@ -150,11 +152,7 @@ int main(int argc, char** argv) {
         if(!cmd_run_sync_and_reset(&cmd)) return 1;
     }
 
-    #ifndef _WIN32
-    #define EXECUTABLE "bikeshed"
-    #else
-    #define EXECUTABLE "bikeshed.exe"
-    #endif
+    #define EXECUTABLE "bikeshed" EXE_SUFFIX
 
     if(needs_rebuild(EXECUTABLE, objs.items, objs.count)) {
         cmd_append(&cmd, cc, "-o", EXECUTABLE);
