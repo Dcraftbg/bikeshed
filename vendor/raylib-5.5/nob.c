@@ -52,11 +52,12 @@ int main(int argc, char** argv) {
     char* bindir = getenv("BINDIR");
     if(!bindir) bindir = "bin";
     setenv("BINDIR", bindir, 0);
+
+    nob_minimal_log_level = NOB_WARNING;
     if(!mkdir_if_not_exists(bindir)) return 1;
-
     const char* build_path = temp_sprintf("%s/raylib", bindir);
-
     if(!mkdir_if_not_exists(build_path)) return 1;
+    nob_minimal_log_level = NOB_INFO;
 
     Cmd cmd = {0};
 

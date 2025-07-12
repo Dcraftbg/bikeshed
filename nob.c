@@ -63,6 +63,7 @@ static bool walk_directory(
 int main(int argc, char** argv) {
     NOB_GO_REBUILD_URSELF(argc, argv);
     char* cc = getenv("CC");
+
     // TODO: automatic checks for the compiler 
     // available on the system. Maybe default to clang on bimbows
     #ifndef _WIN32
@@ -74,7 +75,11 @@ int main(int argc, char** argv) {
     char* bindir = getenv("BINDIR");
     if(!bindir) bindir = "bin";
     setenv("BINDIR", bindir, 0);
+
+    nob_minimal_log_level = NOB_WARNING;
     if(!mkdir_if_not_exists(bindir)) return 1;
+    if(!mkdir_if_not_exists(temp_sprintf("%s/bikeshed", bindir))) return 1;
+    nob_minimal_log_level = NOB_INFO;
     
     // Building Raylib
     #define VENDOR_RAYLIB_NOB_FILEPATH "vendor/raylib-5.5/nob"
@@ -93,14 +98,15 @@ int main(int argc, char** argv) {
     cmd_append(&cmd, VENDOR_RAYLIB_NOB_EXECUTABLE);
     if(!cmd_run_sync_and_reset(&cmd)) return 1;
 
-    if(!mkdir_if_not_exists(temp_sprintf("%s/bikeshed", bindir))) return 1;
 
     File_Paths dirs = { 0 }, c_sources = { 0 };
     const char* src_dir = "src";
     size_t src_prefix_len = strlen(src_dir)+1;
     if(!walk_directory(&dirs, &c_sources, src_dir)) return 1;
     for(size_t i = 0; i < dirs.count; ++i) {
+        nob_minimal_log_level = NOB_WARNING;
         if(!mkdir_if_not_exists(temp_sprintf("%s/bikeshed/%s", bindir, dirs.items[i] + src_prefix_len))) return 1;
+        nob_minimal_log_level = NOB_INFO;
     }
     File_Paths objs = { 0 };
     String_Builder stb = { 0 };
