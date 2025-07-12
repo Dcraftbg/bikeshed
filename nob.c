@@ -90,11 +90,13 @@ int main(int argc, char** argv) {
     #endif
     
     Cmd cmd = { 0 };
-    cmd_append(&cmd, cc, "-o", VENDOR_RAYLIB_NOB_EXECUTABLE, VENDOR_RAYLIB_NOB_FILEPATH".c", "-I./");
+    if(nob_needs_rebuild1(VENDOR_RAYLIB_NOB_EXECUTABLE, VENDOR_RAYLIB_NOB_FILEPATH".c")) {
+        cmd_append(&cmd, NOB_REBUILD_URSELF(VENDOR_RAYLIB_NOB_EXECUTABLE, VENDOR_RAYLIB_NOB_FILEPATH".c"), "-I./");
 #ifdef _WIN32
-    cmd_append(&cmd, "-D_CRT_SECURE_NO_WARNINGS", "-Wno-deprecated-declarations");
+        cmd_append(&cmd, "-D_CRT_SECURE_NO_WARNINGS", "-Wno-deprecated-declarations");
 #endif
-    if(!cmd_run_sync_and_reset(&cmd)) return 1;
+        if(!cmd_run_sync_and_reset(&cmd)) return 1;
+    }
     cmd_append(&cmd, VENDOR_RAYLIB_NOB_EXECUTABLE);
     if(!cmd_run_sync_and_reset(&cmd)) return 1;
 
