@@ -70,6 +70,33 @@ int main(int argc, char** argv) {
     NOB_GO_REBUILD_URSELF(argc, argv);
     char* cc = getenv("CC");
 
+    char* program_name = shift_args(&argc,&argv);
+
+    bool run = false;
+    File_Paths args_to_pass = {0};
+
+    bool collecting_args = false;
+    while(argc){
+        char* arg = shift_args(&argc,&argv);
+
+        if(strcmp(arg, "run") == 0){
+            run = true;
+            continue;
+        }
+        
+        if(strcmp(arg, "--") == 0){
+            collecting_args = true;
+            continue;
+        }
+
+        if(collecting_args){
+            da_append(&args_to_pass, arg);
+        }else{
+            nob_log(NOB_ERROR, "Unknown argument: %s", arg);
+            return 1;
+        }
+    }
+
     // TODO: automatic checks for the compiler 
     // available on the system. Maybe default to clang on bimbows
     #ifndef _WIN32
@@ -169,6 +196,12 @@ int main(int argc, char** argv) {
         #endif
         );
 
+        if(!cmd_run_sync_and_reset(&cmd)) return 1;
+    }
+
+    if(run){
+        cmd_append(&cmd, EXECUTABLE);
+        da_append_many(&cmd, args_to_pass.items, args_to_pass.count);
         if(!cmd_run_sync_and_reset(&cmd)) return 1;
     }
 }
