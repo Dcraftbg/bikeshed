@@ -216,7 +216,8 @@ int bsmain(BSRenderer* renderer, int argc, char** argv) {
         if(content[0] == '<' && content[1] == '/') {
             while(*content != '>' && *content) content++;
             content++;
-            node = node->parent;
+            if(node->parent) node = node->parent;
+            else fprintf(stderr, "WARN: Tried to close something which doesn't have a parent\n");
             continue;
         }
         if(content[0] == '<' && content[1] == '!' && content[2] == '-' && content[3] == '-') {
