@@ -231,13 +231,13 @@ int bsmain(BSRenderer* renderer, int argc, char** argv) {
         tag->color = 0x212121ff;
         int e = html_parse_next_tag(&atom_table, content, tag, &content);
         if(e == -HTMLERR_EOF) break;
-        tag->parent = node; 
-        da_push(&node->children, tag);
-        if (!atom_set_get(&void_elements, tag->name) && !tag->self_closing && tag->name) node = tag;
         if(e != 0) {
             fprintf(stderr, "Failed to parse tag: %s\n", htmlerr_str(e));
             return 1;
         }
+        tag->parent = node; 
+        da_push(&node->children, tag);
+        if (!atom_set_get(&void_elements, tag->name) && !tag->self_closing && tag->name) node = tag;
     }
     if(node != &state.root) {
         HTMLTag* ct = node;

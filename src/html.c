@@ -6,12 +6,14 @@
 #include <darray.h>
 #include <string.h>
 
-static_assert(HTMLERR_COUNT == 5, "Update htmlerr_strtab");
+static_assert(HTMLERR_COUNT == 7, "Update htmlerr_strtab");
 static const char* htmlerr_strtab[] = {
     [HTMLERR_TODO] = "Unimplemented",
     [HTMLERR_EOF]  = "End of File",
     [HTMLERR_INVALID_TAG] = "Invalid tag format",
+    [HTMLERR_INVALID_TAG_NAME] = "Invalid tag name",
     [HTMLERR_INVALID_ATTRIBUTE]  = "Invalid attribute format",
+    [HTMLERR_INVALID_ATTRIBUTE_NAME] = "Invalid attribute name",
 };
 const char* htmlerr_str(int err) {
     if(err >= 0) return "OK";
@@ -23,6 +25,7 @@ int html_parse_attribute(const char* content, HTMLAttribute* att, const char** e
     att->key = (char*)content;
     while (isalnum(*content) || *content == '_' || *content == '-')
         content++;
+    if(att->key == content) return -HTMLERR_INVALID_ATTRIBUTE_NAME;
     att->key_len = content - att->key;
     while(isspace(*content)) content++;
     if (*content != '=') {
@@ -56,6 +59,7 @@ int html_parse_next_tag(AtomTable* atom_table, const char* content, HTMLTag* tag
         content++;
         const char* name = content;
         while(isalnum(*content)) content++;
+        if(content == name) return -HTMLERR_INVALID_TAG_NAME;
         tag->name = atom_table_get(atom_table, name, content-name);
         if(!tag->name) {
             tag->name = atom_new(name, content - name);
