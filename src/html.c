@@ -23,7 +23,7 @@ const char* htmlerr_str(int err) {
 }
 int html_parse_attribute(const char* content, HTMLAttribute* att, const char** end) {
     att->key = (char*)content;
-    while (isalnum(*content) || *content == '_' || *content == '-')
+    while (isalnum(*content) || *content == '_' || *content == '-' || *content == ':')
         content++;
     if(att->key == content) return -HTMLERR_INVALID_ATTRIBUTE_NAME;
     att->key_len = content - att->key;
