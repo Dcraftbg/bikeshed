@@ -200,7 +200,12 @@ int main(int argc, char** argv) {
     }
 
     if(run){
-        cmd_append(&cmd, EXECUTABLE);
+        cmd_append(&cmd, 
+#ifndef _WIN32
+            "./"
+#endif
+            EXECUTABLE
+        );
         da_append_many(&cmd, args_to_pass.items, args_to_pass.count);
         if(!cmd_run_sync_and_reset(&cmd)) return 1;
     }
