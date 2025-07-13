@@ -276,9 +276,9 @@ int bsmain(BSRenderer* renderer, int argc, char** argv) {
     if(style_atom && state.head) {
         for(size_t i = 0; i < state.head->children.len; ++i) {
             HTMLTag* tag = state.head->children.items[i];
-            if(tag->name == style_atom && tag->children.len > 0) {
-                const char* css_content = tag->children.items[0]->str_content;
-                const char* css_content_end = tag->children.items[0]->str_content + tag->children.items[0]->str_content_len;
+            if(tag->name == style_atom) {
+                const char* css_content = tag->str_content;
+                const char* css_content_end = tag->str_content + tag->str_content_len;
                 int e = css_parse(&atom_table, &selector_maps, css_content, css_content_end, &css_content);
                 if(e < 0) {
                     fprintf(stderr, "CSS:ERROR parsing CSS: %s\n", csserr_str(e));

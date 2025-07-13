@@ -53,7 +53,6 @@ int html_parse_attribute(const char* content, HTMLAttribute* att, const char** e
     *end = content;
     return 0;
 }
-
 int html_parse_next_tag(AtomTable* atom_table, const char* content, HTMLTag* tag, char** end) {
     if(*content == '<') {
         content++;
@@ -65,8 +64,9 @@ int html_parse_next_tag(AtomTable* atom_table, const char* content, HTMLTag* tag
             tag->name = atom_new(name, content - name);
             assert(atom_table_insert(atom_table, tag->name) && "Just buy more RAM");
         }
+
+        while(isspace(*content)) content++;
         while (*content && *content != '>' && *content != '/') {
-            while(isspace(*content)) content++;
             int e;
             HTMLAttribute *att = (HTMLAttribute*) malloc(sizeof(HTMLAttribute));
             assert(att && "Just buy more RAM");
@@ -76,22 +76,30 @@ int html_parse_next_tag(AtomTable* atom_table, const char* content, HTMLTag* tag
                 return e;
             }
             da_push(&tag->attributes, att);
-        }
-        if (*content == '/') {
-            if (content[1] != '>') return -HTMLERR_INVALID_TAG;
-            content += 2;
-            *end = (char*) content;
-            tag->self_closing = true;
-            return 0;
+            while(isspace(*content)) content++;
         }
         tag->self_closing = false;
+        if (*content == '/') {
+            content++;
+            if (content[0] != '>') return -HTMLERR_INVALID_TAG;
+            tag->self_closing = true;
+            content++;
+            *end = (char*)content;
+            return 0;
+        }
         content++;
+        if(strcmp(tag->name->data, "script") == 0 || strcmp(tag->name->data, "style") == 0 || strcmp(tag->name->data, "title") == 0) {
+            tag->str_content = content;
+            while(*content && (*content != '<' || content[1] != '/' || strncmp(content + 2, tag->name->data, tag->name->len) != 0)) content++;
+            tag->str_content_len = content - tag->str_content;
+            *end = (char*)content;
+        }
         *end = (char*)content;
         return 0;
     }
     if(*content == '\0') return -HTMLERR_EOF;
     tag->str_content = content;
-    while(*content != '<' && *content) content++;
+    while(*content && *content != '<') content++;
     tag->str_content_len = content - tag->str_content;
     *end = (char*)content;
     return 0;
