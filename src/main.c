@@ -135,15 +135,13 @@ BSState state = { 0 };
 int bsmain(BSRenderer* renderer, int argc, char** argv) {
     const char* exe = shift_args(&argc, &argv);
     const char* example_path = NULL;
-    bool headless = false;
     bool rawjs = false;
     while(argc) {
         const char* arg = shift_args(&argc, &argv);
         if (strcmp(arg, "--help") == 0) {
             help(stdout, exe);
             return 0;
-        } else if (strcmp(arg, "--headless") == 0) headless = true;
-        else if (strcmp(arg, "--rawjs") == 0) rawjs = true;
+        } else if (strcmp(arg, "--rawjs") == 0) rawjs = true;
         else if(!example_path) example_path = arg;
         else {
             fprintf(stderr, "ERROR Unexpected argument: `%s`\n", arg);
@@ -315,15 +313,7 @@ int bsmain(BSRenderer* renderer, int argc, char** argv) {
     apply_css_styles(state.html, state.fontSize);
     fixup_tree(state.body);
     dump_html_tag(node, 0);
-    // This is a fucked up solution
-#if 0
-    if (headless) {
-        CloseWindow();
-        return 0;
-    }
-#else
-    (void)headless;
-#endif
+
     if(!state.html->background_color) state.html->background_color = 0xf5f5f5ff; 
     fprintf(stderr, "html->background_color=%08X\n", state.html->background_color);
     return 0;
