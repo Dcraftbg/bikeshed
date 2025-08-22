@@ -1,5 +1,5 @@
 #pragma once
-#include <css/parser.h>
+#include "parser.h"
 typedef struct CSSPatternMapBucket CSSPatternMapBucket;
 struct CSSPatternMapBucket {
     CSSPatternMapBucket* next;

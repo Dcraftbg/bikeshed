@@ -1,6 +1,6 @@
 #pragma once
 #include <stdio.h>
-#include <todo.h>
+#include "../todo.h"
 #define DCLOC __FILE__":"STRINGIFY1(__LINE__)
 #if 1
 #   define dcss_log(level, ...) (fprintf(stderr, "CSS:"level" " DCLOC " " __VA_ARGS__), fprintf(stderr, "\n"))

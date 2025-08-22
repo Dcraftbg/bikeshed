@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <stdbool.h>
-#include <bsrenderer/color.h>
+#include "color.h"
 
 typedef struct BSFill BSFill;
 typedef struct BSFont BSFont;

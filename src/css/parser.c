@@ -1,12 +1,12 @@
-#include <css/parser.h>
+#include "parser.h"
 #include <ctype.h>
 #include <string.h>
 #include <assert.h>
-#include <darray.h>
-#include <atom.h>
+#include "../darray.h"
+#include "../atom.h"
 #include <stdlib.h>
-#include <todo.h>
-#include <html.h>
+#include "../todo.h"
+#include "../html.h"
 
 static_assert(CSSERR_COUNT == 5, "Update csserr_strtab");
 static const char* csserr_strtab[] = {

@@ -1,5 +1,5 @@
 #pragma once
-#include "bsrenderer/color.h"
+#include "color.h"
 enum {
     BSFILL_SOLID_COLOR,
     BSFILL_COUNT

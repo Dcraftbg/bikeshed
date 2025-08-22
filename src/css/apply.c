@@ -1,10 +1,10 @@
-#include <css/apply.h>
-#include <html.h>
-#include <todo.h>
-#include <atom.h>
+#include "apply.h"
+#include "../html.h"
+#include "../todo.h"
+#include "../atom.h"
 #include <string.h>
-#include <css/parse_values.h>
-#include <css/log.h>
+#include "parse_values.h"
+#include "log.h"
 
 void apply_css_styles(HTMLTag* tag, float rootFontSize) {
     tag->fontSize = rootFontSize;

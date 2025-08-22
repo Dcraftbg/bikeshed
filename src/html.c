@@ -2,8 +2,8 @@
 #include "assert.h"
 #include <stdio.h>
 #include <ctype.h>
-#include <atom.h>
-#include <darray.h>
+#include "atom.h"
+#include "darray.h"
 #include <string.h>
 
 static_assert(HTMLERR_COUNT == 7, "Update htmlerr_strtab");

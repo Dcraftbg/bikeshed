@@ -1,9 +1,9 @@
-#include <css/parse_values.h>
-#include <todo.h>
+#include "parse_values.h"
+#include "../todo.h"
 #include <string.h>
 #include <ctype.h>
-#include <css/parser.h>
-#include <css/log.h>
+#include "parser.h"
+#include "log.h"
 
 int css_parse_float(const char* css_content, const char* css_content_end, const char** end, float* result) {
     float sign = 1.f;

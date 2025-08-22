@@ -1,25 +1,26 @@
 #include <stdio.h>
-#include <jsengine.h>
-#include <todo.h>
-#include <fileutils.h>
+#include "todo.h"
+#include "fileutils.h"
 #include <string.h>
-#include <darray.h>
+#include "darray.h"
 #include <assert.h>
 #include <ctype.h>
 #include <math.h>
 #include <stdint.h>
-#include <atom.h>
-#include <atom_set.h>
-#include <html.h>
-#include <css/pattern_map.h>
-#include <css/parse_values.h>
-#include <css/match.h>
-#include <css/apply.h>
-#include <layouter/layouter.h>
-#include <debug/box_render.h>
-#include <render/html_tag.h>
-#include <fixup.h>
-#include <bsrenderer/renderer.h>
+#include "atom.h"
+#include "atom_set.h"
+#include "html.h"
+#include "css/pattern_map.h"
+#include "css/parse_values.h"
+#include "css/match.h"
+#include "css/apply.h"
+#include "layouter/layouter.h"
+#include "debug/box_render.h"
+#include "render/html_tag.h"
+#include "fixup.h"
+#include "bsrenderer/renderer.h"
+#include "bsrenderer/fill.h"
+#include "bsrenderer/font.h"
 
 #define W_RATIO 16
 #define H_RATIO 9
@@ -117,7 +118,6 @@ char* shift_args(int* argc, char*** argv) {
 void help(FILE* sink, const char* exe) {
     fprintf(sink, "%s <input path>\n", exe);
 }
-#include <bsrenderer/font.h>
 typedef struct {
     BSFont font;
     float fontSize;
@@ -135,14 +135,12 @@ BSState state = { 0 };
 int bsmain(BSRenderer* renderer, int argc, char** argv) {
     const char* exe = shift_args(&argc, &argv);
     const char* example_path = NULL;
-    bool rawjs = false;
     while(argc) {
         const char* arg = shift_args(&argc, &argv);
         if (strcmp(arg, "--help") == 0) {
             help(stdout, exe);
             return 0;
-        } else if (strcmp(arg, "--rawjs") == 0) rawjs = true;
-        else if(!example_path) example_path = arg;
+        } else if(!example_path) example_path = arg;
         else {
             fprintf(stderr, "ERROR Unexpected argument: `%s`\n", arg);
             help(stderr, exe);
@@ -160,7 +158,6 @@ int bsmain(BSRenderer* renderer, int argc, char** argv) {
     if(!content_data) return 1;
     char* content = content_data;
     bool quirks_mode = true;
-    if (rawjs) return run_js(content);
 
     if(strncmp_ci(content, "<!DOCTYPE", 9) == 0) {
         content += 9;
@@ -330,8 +327,6 @@ void bsupdate(BSRenderer* renderer, float screen_width) {
     }
 }
 #include <raylib.h>
-#include <bsrenderer/fill.h>
-#include <bsrenderer/font.h>
 BSCodepointSize MeasureCodepointEx(Font font, int codepoint, float fontSize, float spacing) {
     size_t index = GetGlyphIndex(font, codepoint);
     float scaleFactor = fontSize/font.baseSize;

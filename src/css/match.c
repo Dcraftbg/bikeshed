@@ -1,6 +1,6 @@
-#include <html.h>
-#include <css/pattern_map.h>
-#include <darray.h>
+#include "../html.h"
+#include "pattern_map.h"
+#include "../darray.h"
 
 void match_css_patterns(HTMLTag* tag, CSSPatternMaps* selector_maps) {
     CSSPatterns* patterns = css_pattern_map_get(&selector_maps->maps[CSSTAG_TAG], tag->name);

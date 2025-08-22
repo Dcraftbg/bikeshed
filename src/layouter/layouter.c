@@ -1,14 +1,14 @@
-#include <layouter/layouter.h>
-#include <html.h>
-#include <css/pattern_map.h>
-#include <todo.h>
+#include "layouter.h"
+#include "../html.h"
+#include "../css/pattern_map.h"
+#include "../todo.h"
 #include <assert.h>
 #include <string.h>
-#include <atom.h>
+#include "../atom.h"
 #include <stdlib.h>
 #include <math.h>
 #include <ctype.h>
-#include <bsrenderer/renderer.h>
+#include "../bsrenderer/renderer.h"
 void compute_box_html_tag(BSRenderer* renderer, HTMLTag* tag, BSFont* font, float fontSize, float textFontSize, float spacing, float screen_width, size_t* cursor_x, size_t* cursor_y) {
     size_t new_x = tag->x = *cursor_x;
     size_t new_y = tag->y = *cursor_y;

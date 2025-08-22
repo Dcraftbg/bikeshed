@@ -1,11 +1,11 @@
 #include <stdio.h>
-#include <fileutils.h>
+#include "fileutils.h"
 #include <string.h>
-#include <darray.h>
+#include "darray.h"
 #include <assert.h>
 #include <ctype.h>
-#include <css/parser.h>
-#include <atom.h>
+#include "css/parser.h"
+#include "atom.h"
 
 #define STRINGIFY0(x) # x
 #define STRINGIFY1(x) STRINGIFY0(x)

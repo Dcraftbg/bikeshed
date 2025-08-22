@@ -1,9 +1,9 @@
-#include <render/html_tag.h> 
+#include "html_tag.h"
 #include <string.h>
 #include <ctype.h>
-#include <html.h>
-#include <atom.h>
-#include <bsrenderer/renderer.h>
+#include "../html.h"
+#include "../atom.h"
+#include "../bsrenderer/renderer.h"
 
 void render_html_tag(BSRenderer* renderer, HTMLTag* tag, BSFont* font, float fontSize, float textFontSize, float spacing, float scroll_y) {
     bsrenderer_draw_rectangle_color(renderer, tag->x, tag->y + scroll_y, tag->width, tag->height, tag->background_color);

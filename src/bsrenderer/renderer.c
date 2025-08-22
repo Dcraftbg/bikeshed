@@ -1,5 +1,5 @@
-#include <bsrenderer/renderer.h>
-#include <bsrenderer/fill.h>
+#include "renderer.h"
+#include "fill.h"
 
 BSCodepointSize bsrenderer_measure_codepoint(BSRenderer* renderer, BSFont* font, int codepoint, float fontSize, float spacing) {
     return renderer->measure_codepoint(renderer, font, codepoint, fontSize, spacing);

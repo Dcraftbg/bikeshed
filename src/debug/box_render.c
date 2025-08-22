@@ -1,8 +1,8 @@
-#include <debug/box_render.h>
-#include <bsrenderer/color.h>
-#include <bsrenderer/renderer.h>
-#include <bsrenderer/fill.h>
-#include <html.h>
+#include "box_render.h"
+#include "../bsrenderer/color.h"
+#include "../bsrenderer/renderer.h"
+#include "../bsrenderer/fill.h"
+#include "../html.h"
 #include <stdio.h>
 
 size_t render_box_color_n = 0;
